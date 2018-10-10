@@ -30,4 +30,7 @@ npm run test:unit
 npm run test:e2e
 ```
 
-Test CI
+### Run both unit and e2e tests headless
+```
+npm run test
+```
