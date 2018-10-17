@@ -10,20 +10,22 @@
     "lint": "vue-cli-service lint",
     "test": "npm run test:unit && npm run test:e2e:headless",
     "test:unit": "vue-cli-service test:unit",
+    "test:unit:watch": "vue-cli-service test:unit --watch",
     "test:e2e": "vue-cli-service test:e2e",
     "test:e2e:headless": "start-server-and-test start http://localhost:5000 cy:run",
     "cy:run": "cypress run"
   },
   "dependencies": {
-    "eslint": "^5.6.1",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
     "express": "^4.16.3",
+    "serve-static": "^1.13.2",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "@vue/cli-plugin-babel": "^3.0.0",
     "@vue/cli-plugin-e2e-cypress": "^3.0.0",
     "@vue/cli-plugin-eslint": "^3.0.0",
