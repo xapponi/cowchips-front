@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import About from './views/About.vue';
 
+// TODO install vuetify
+// TODO make axios base instance
 Vue.use(Router);
 
 export default new Router({
@@ -11,7 +13,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: Home
     },
     {
       path: '/about',
@@ -19,7 +21,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: About,
-    },
-  ],
+      component: About
+    }
+  ]
 });
