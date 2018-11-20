@@ -13,10 +13,19 @@ export default {
   components: {
 
   },
-  data () {
+  data() {
     return {
       //
     }
   }
 }
 </script>
+
+<style>
+  input {
+    border: none;
+  }
+  label {
+    z-index: 7;
+  }
+</style>

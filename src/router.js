@@ -2,9 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import About from './views/About.vue';
+import Donation from './views/Donation';
 
-// TODO install vuetify
-// TODO make axios base instance
 Vue.use(Router);
 
 export default new Router({
@@ -19,6 +18,11 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/donation',
+      name: 'donation',
+      component: Donation
     },
     {
       path: '*',
