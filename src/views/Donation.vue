@@ -1,5 +1,12 @@
 <template>
   <v-container>
+
+    <v-flex xs12>
+      
+        <v-btn large dark round to="/home">Home</v-btn>
+
+    </v-flex>
+
     <v-layout align-center justify-center row fill-height wrap>
       <v-flex xs12 md6>
         <credit-card

@@ -43,7 +43,7 @@
 
       <v-flex xs12>
         <div style="text-align: center;">
-          <v-btn large dark round>Donate</v-btn>
+          <v-btn large dark round to="/donation">Donate</v-btn>
         </div>
       </v-flex>
 
