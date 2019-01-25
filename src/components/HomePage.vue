@@ -23,7 +23,7 @@
       <v-flex mb-4>
         <div style="text-align: center;">
           <h1 class="display-4 font-weight-thin mb-3" >
-            Welcome to the CowChips4Charity event page!
+            Welcome{{email}} to the CowChips4Charity event page!
           </h1>
 
           <p class="subheading font-weight-regular">
@@ -71,7 +71,14 @@
           href: 'http://www.booradleyfoundation.org/'
         }
       ]
-    })
+    }),
+    computed: {
+      email() {
+        if (this.$store.state.user)
+          return ' ' + this.$store.state.user.email
+        return ''
+      }
+    }
   }
 </script>
 

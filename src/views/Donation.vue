@@ -55,7 +55,7 @@
 
 <script>
   import CreditCard from '@/components/CreditCard'
-  import { mask } from "vue-the-mask";
+  import { mask } from "vue-the-mask"
 
   export default {
     directives: { mask },
