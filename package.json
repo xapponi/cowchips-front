@@ -8,13 +8,13 @@
     "test": "npm run test:unit && npm run test:e2e:headless",
     "lint": "vue-cli-service lint --no-fix",
     "lint:fix": "vue-cli-service lint",
-    "postinstall": "npm run build",
     "start": "node server.js",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "test:e2e": "vue-cli-service test:e2e",
     "test:e2e:headless": "start-server-and-test start http://localhost:5000 cy:run",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "axios": "^0.18.0",
