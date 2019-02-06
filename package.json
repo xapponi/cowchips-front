@@ -8,7 +8,7 @@
     "test": "npm run test:unit && npm run test:e2e:headless",
     "lint": "vue-cli-service lint --no-fix",
     "lint:fix": "vue-cli-service lint",
-    "start": "node server.js",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:watch": "vue-cli-service test:unit --watch",
     "test:e2e": "vue-cli-service test:e2e",
@@ -19,6 +19,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.4",
+    "express-http-to-https": "^1.1.4",
+    "pm2": "^3.2.9",
     "serve-static": "^1.13.2",
     "vue": "^2.5.17",
     "vue-facebook-signin-button": "^1.0.1",
