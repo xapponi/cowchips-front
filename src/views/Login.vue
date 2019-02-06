@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <span>Login Page!</span>
+    <v-alert v-if="error" :value="true" type="error">{{error}}</v-alert>
     <v-text-field id="email" placeholder="Email" v-model="email" browser-autocomplete="off"></v-text-field>
     <v-text-field id="password" :type="'password'" placeholder="Password" v-model="password"></v-text-field>
     <v-btn id="submit" @click="submit">Login</v-btn>
@@ -8,24 +9,33 @@
 </template>
 
 <script>
-  // TODO make this page nice looking
-  // TODO add facebook oauth: https://github.com/phanan/vue-facebook-signin-button
-  // TODO password and email validation onsubmit -> error message if wrong
+  import axios from 'axios'
+  import localStorage from '@/helpers/localStorage'
+  import { authTokenName } from '@/config/auth'
+
   export default {
     name: 'Login',
     data() {
       return {
+        error: '',
         email: '',
         password: '',
       }
     },
     methods: {
       submit() {
-        const loginInfo = {
+        axios.post('/login', {
           email: this.email,
           password: this.password
-        }
-        this.$store.dispatch('login', loginInfo)
+        })
+          .then(res => {
+            const token = res.data.token
+            localStorage.setCookie(authTokenName, token)
+            this.$router.push('/home')
+          })
+          .catch(err => {
+            this.error = err.response.data.error
+          })
       }
     }
   }

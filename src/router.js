@@ -28,19 +28,25 @@ export default new Router({
       path: '/donation',
       name: 'donation',
       component: Donation,
-      requiresAuth: true
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/event-select',
       name: 'Even Selection',
       component: Events,
-      requiresAuth: true
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/tiles',
       name: 'Tile Selection',
       component: Tiles,
-      requiresAuth: true
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
