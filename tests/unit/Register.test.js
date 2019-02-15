@@ -3,7 +3,7 @@ import Vuetify from 'vuetify'
 import * as chai from 'chai'
 import Vuex from 'vuex'
 import Vue from 'vue'
-import Login from '@/views/Login'
+import Register from '@/views/Register'
 import axios from 'axios'
 import localStorage from '@/helpers/localStorage'
 import flushPromises from "flush-promises"
@@ -13,8 +13,6 @@ import VueRouter from 'vue-router'
 const localVue = createLocalVue()
 localVue.use(VueRouter)
 
-import { authTokenName } from '@/config/auth'
-
 Vue.config.silent = true
 
 Vue.use(Vuex)
@@ -23,46 +21,46 @@ Vue.use(Vuetify)
 const jestExpect = global.expect
 const expect = chai.expect
 
-describe('Login screen', () => {
+describe('Register', () => {
 
-  let store
-  
   beforeEach(() => {
     axios.post = jest.fn()
     localStorage.setCookie = jest.fn()
   })
-  
-  it('Login shows the login form', () => {
-    const wrapper = mount(Login, {
-      store
-    })
-    expect(wrapper.text()).to.include('Login')
+
+  it('Register shows the Register form', () => {
+    const wrapper = mount(Register)
+    expect(wrapper.text()).to.include('Register')
     expect(wrapper.find('#email').exists()).to.eql(true)
     expect(wrapper.find('#password').exists()).to.eql(true)
+    expect(wrapper.find('#name').exists()).to.eql(false)
+    expect(wrapper.find('#phone').exists()).to.eql(true)
   })
-  
-  it('Submit calls the submit method', () => {
 
-    Login.methods.submit = jest.fn()
-    const wrapper = mount(Login)
-    
-    const loginInfo = {
+  it('Register calls the Register method', () => {
+
+    Register.methods.register = jest.fn()
+    const wrapper = mount(Register)
+
+    const registerInfo = {
       email: 'a@b.com',
       password: 'password',
+      name: 'dlev',
+      phone:'651-353-4788',
     }
-    wrapper.setData([{email: loginInfo.email}, {password: loginInfo.password}])
-    
-    const submitButton = wrapper.find('#submit')
+    wrapper.setData([{email: registerInfo.email}, {password: registerInfo.password},{name: registerInfo.name},{phone: registerInfo.phone}])
 
-    submitButton.trigger('click')
-    jestExpect(Login.methods.submit).toHaveBeenCalled()
+    const registerButton = wrapper.find('#Register')
+
+    registerButton.trigger('click')
+    jestExpect(Register.methods.register).toHaveBeenCalled()
 
   })
 
-  it('set the cookie and route on successful login', ()  => {
+  it('set the cookie and route on successful Register', ()  => {
     const mockRes = {
       data: {
-       token: 'blah'
+        token: 'blah'
       }
     }
 
@@ -71,7 +69,7 @@ describe('Login screen', () => {
     const routes = [
       {
         path: '/home',
-        component: Login
+        component: Register
       }
     ]
     const router = new VueRouter({
@@ -80,16 +78,18 @@ describe('Login screen', () => {
 
     router.push = jest.fn()
 
-    const wrapper = mount(Login, { localVue, router })
+    const wrapper = mount(Register, { localVue, router })
 
 
     axios.post.mockResolvedValue(mockRes)
 
 
 
-    const loginInfo = {
+    const registerInfo = {
       email: 'a@b.com',
       password: 'password',
+      name: 'dlev',
+      phone:'651-353-4788',
     }
 
     const cookieInfo = {
@@ -97,18 +97,23 @@ describe('Login screen', () => {
       value: mockRes.data.token,
 
     }
-    wrapper.setData(loginInfo)
+    wrapper.setData(registerInfo)
 
-    const submitButton = wrapper.find('#submit')
-    submitButton.trigger('click')
+    const registerButton = wrapper.find('#Register')
+    registerButton.trigger('click')
     setTimeout(async () => {
-      jestExpect(axios.post).toHaveBeenCalledWith('/login', loginInfo)
+      jestExpect(axios.post).toHaveBeenCalledWith('/register', registerInfo)
       await flushPromises()
       jestExpect(localStorage.setCookie).toHaveBeenCalledWith(cookieInfo.authTokenName,cookieInfo.value)
       // expect(wrapper.vm.$route).to.be.an('object')
       jestExpect(router.push).toHaveBeenCalledWith('/home')
 
     },100)
+
+    // wrapper.vm.$nextTick(() => {
+    //
+    // })
+
 
   })
 

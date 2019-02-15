@@ -8,6 +8,7 @@ import Tiles from './views/Tiles'
 import Login from './views/Login'
 import Account from './views/Account'
 import UserTiles from './views/UserTiles'
+import Register from './views/Register'
 
 Vue.use(Router)
 
@@ -40,6 +41,19 @@ export default new Router({
         requiresAuth: true
       }
     },
+
+    {
+
+      path: '/register',
+      name: 'Register',
+      component: Register,
+      meta:{
+                requiresAuth:false
+          }
+    }
+
+    ,
+
     {
       path: '/tiles',
       name: 'Tile Selection',

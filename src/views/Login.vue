@@ -1,3 +1,4 @@
+
 <template>
   <v-container>
     <span>Login Page!</span>
@@ -9,6 +10,7 @@
 </template>
 
 <script>
+
   import axios from 'axios'
   import localStorage from '@/helpers/localStorage'
   import { authTokenName } from '@/config/auth'
@@ -29,6 +31,7 @@
           password: this.password
         })
           .then(res => {
+
             const token = res.data.token
             localStorage.setCookie(authTokenName, token)
             this.$router.push('/home')
