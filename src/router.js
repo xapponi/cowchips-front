@@ -8,6 +8,7 @@ import Tiles from './views/Tiles'
 import Login from './views/Login'
 import Account from './views/Account'
 import UserTiles from './views/UserTiles'
+import Stepper from './views/Stepper'
 import Register from './views/Register'
 
 Vue.use(Router)
@@ -19,6 +20,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/play',
+      name: 'Play',
+      component: Stepper
     },
     {
       path: '/about',
@@ -41,7 +47,6 @@ export default new Router({
         requiresAuth: true
       }
     },
-
     {
 
       path: '/register',
@@ -50,10 +55,7 @@ export default new Router({
       meta:{
                 requiresAuth:false
           }
-    }
-
-    ,
-
+    },
     {
       path: '/tiles',
       name: 'Tile Selection',

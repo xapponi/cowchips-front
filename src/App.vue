@@ -22,6 +22,8 @@ export default {
 </script>
 
 <style>
+  @import './assets/main.css';
+
   input {
     border: none;
   }

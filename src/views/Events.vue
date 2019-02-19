@@ -1,10 +1,21 @@
 <template>
-  <span>Events!</span>
+  <div>
+    <div style="height: 500px; background-color: red">
+      <span>EVENTS!</span>
+    </div>
+    <div style="height: 500px; background-color: blue">
+      <span>EVENTS!</span>
+    </div>
+  </div>
 </template>
 
 <script>
   export default {
-    name: 'Events'
+    name: 'Events',
+    components: {
+    },
+    methods: {
+    }
   }
 </script>
 
