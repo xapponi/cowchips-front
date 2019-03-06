@@ -20,6 +20,11 @@
     "no-var": 2
   },
 
+  "rules": {
+    "semi": [2, "never"],
+    "no-var": 2
+  },
+
   "plugins": [
     "import",
     "node",

@@ -9,9 +9,10 @@ import localStorage from '@/helpers/localStorage'
 import axios from 'axios'
 import { authTokenName } from '@/config/auth'
 
-Vue.config.productionTip = false
 axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL
 axios.defaults.withCredentials = true
+
+Vue.config.productionTip = false
 
 Vue.use(Vuetify)
 Vue.use(Vuex)

@@ -8,6 +8,7 @@ import Tiles from './views/Tiles'
 import Login from './views/Login'
 import Account from './views/Account'
 import UserTiles from './views/UserTiles'
+import Organizations from './views/Organizations'
 import Stepper from './views/Stepper'
 import Register from './views/Register'
 
@@ -40,11 +41,11 @@ export default new Router({
       }
     },
     {
-      path: '/event-select',
-      name: 'Even Selection',
-      component: Events,
+      path: '/org-select',
+      name: 'Org Selection',
+      component: Organizations,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {
@@ -68,6 +69,12 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login,
+    },
+    {
+      path: '/org-select',
+      name: 'Org Selection',
+      component: Organizations,
+      requiresAuth: true
     },
     {
       path: '/account',

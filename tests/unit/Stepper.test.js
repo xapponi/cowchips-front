@@ -5,6 +5,7 @@ import Vue from 'vue'
 import StepperNav from '@/components/StepperNav'
 import StepperItem from '@/components/StepperItem'
 import Stepper from '@/views/Stepper'
+import Organizations from '@/views/Organizations'
 
 Vue.config.silent = true
 
@@ -35,9 +36,9 @@ describe('Stepper', () => {
     expect(wrapper.vm.$data.step).to.eql(2)
   })
   
-  it('first page is Events', () => {
+  it('first page is Organizations', () => {
     const wrapper = mount(Stepper)
-    expect(wrapper.text()).to.include('EVENTS!')
+    expect(wrapper.find(Organizations).isEmpty()).to.eql(false)
   })
   
   it('second page is tiles', () => {
@@ -55,6 +56,6 @@ describe('Stepper', () => {
   
   it('Doesnt show next button on last step', () => {
     const wrapper = mount(Stepper)
-    expect(wrapper.findAll('#next').length).to.eql(2)
+    expect(wrapper.findAll('#next').length).to.eql(1)
   })
 })

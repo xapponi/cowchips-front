@@ -67,7 +67,7 @@
       getNavHeight() {
         if(!document.getElementById('stepperNav'))
           return
-        
+
         this.navHeight = document.getElementById('stepperNav').clientHeight
       },
       getContentPaddingWidth() {
@@ -77,7 +77,6 @@
 
         const paddingStr = window.getComputedStyle(content).getPropertyValue('padding-left')
         this.itemPaddingWidth = paddingStr.substring(0, paddingStr.length-2)
-        console.log(this.itemPaddingWidth)
       }
     },
     computed: {

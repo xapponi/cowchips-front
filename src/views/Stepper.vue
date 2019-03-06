@@ -1,7 +1,7 @@
 <template>
   <v-stepper :value="step">
     <v-stepper-header>
-      <v-stepper-step :complete="step > 1" step="1">Team Select</v-stepper-step>
+      <v-stepper-step :complete="step > 1" step="1">Org Select</v-stepper-step>
       <v-divider></v-divider>
       <v-stepper-step :complete="step > 2" step="2">Tile Selection</v-stepper-step>
       <v-divider></v-divider>
@@ -9,8 +9,8 @@
     </v-stepper-header>
 
     <v-stepper-items>
-      <stepper-item step="1" @next="upStep" @back="downStep" disallowBack>
-        <events></events>
+      <stepper-item step="1" disallowBack disallowNext>
+        <organizations @next="upStep"></organizations>
       </stepper-item>
 
       <stepper-item step="2" @next="upStep" @back="downStep">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import Events from './Events'
+  import Organizations from './Organizations'
   import Donation from './Donation'
   import Tile from './Tiles'
   import StepperItem from '@/components/StepperItem'
@@ -34,7 +34,7 @@
     name: 'Layout',
     components: {
       StepperItem,
-      Events,
+      Organizations,
       Donation,
       Tile
     },
