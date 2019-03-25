@@ -13,8 +13,6 @@ import VueRouter from 'vue-router'
 const localVue = createLocalVue()
 localVue.use(VueRouter)
 
-import { authTokenName } from '@/config/auth'
-
 Vue.config.silent = true
 
 Vue.use(Vuex)
