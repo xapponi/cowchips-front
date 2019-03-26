@@ -4,7 +4,7 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Donation from './views/Donation'
 import Events from './views/Events'
-import Tiles from './views/Tiles'
+import Game from './views/Game'
 import Login from './views/Login'
 import Account from './views/Account'
 import UserTiles from './views/UserTiles'
@@ -58,12 +58,10 @@ export default new Router({
           }
     },
     {
-      path: '/tiles',
+      path: '/game/:id',
       name: 'Tile Selection',
-      component: Tiles,
-      meta: {
-        requiresAuth: true
-      }
+      component: Game,
+      requiresAuth: true
     },
     {
       path: '/login',

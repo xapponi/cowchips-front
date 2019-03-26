@@ -20,8 +20,11 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import axios from 'axios'
+  import VueLocalStorage from 'vue-localstorage'
 
+  Vue.use(VueLocalStorage)
   export default {
     name: 'Organizations',
     created() {
@@ -40,6 +43,7 @@
             const games = res.data
             games.forEach(game => {
               game.organizations.forEach(org => {
+                org.gameId = game._id
                 this.organizations.push(org)
               })
             })
@@ -49,6 +53,8 @@
         const orgRecord = this.organizations.find((org) => org.id === id)
         this.$store.commit('setGameId', orgRecord.gameId)
         this.$store.commit('setOrgId', orgRecord.id)
+        Vue.localStorage.set('gamesID', orgRecord.gameId)
+        console.log(Vue.localStorage.get('gamesID'))
         this.$emit('next')
       },
       hasImgError(id) {

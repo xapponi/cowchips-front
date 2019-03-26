@@ -20,7 +20,7 @@
       </div>
       <div class="form-group">
         <label for="phone">Phone</label>
-        <input type="tel" v-model="phone" v-mask="'###-###-####'" id='phone' placeholder="Phone" />
+        <input type="tel" v-model="phone" id='phone' placeholder="Phone" />
 
       </div>
       <v-btn  id="Register" @click="register">Register</v-btn>
@@ -51,6 +51,13 @@
         password: '',
         name: '',
         phone:'',
+        dob: new Date(4000000000),
+        location:  {
+        "address": "123 Main St",
+          "state": "Iowa",
+          "zip": "50011",
+          "city": "Ames"
+      },
       }
     },
 
@@ -62,7 +69,9 @@
               email: this.email,
               password: this.password,
               name: this.name,
-              phone: this.phone
+              phone: this.phone,
+              dob: this.dob,
+              location: this.location,
             })
               .then(res=>{
                 this.success=true

@@ -14,7 +14,7 @@
       </stepper-item>
 
       <stepper-item step="2" @next="upStep" @back="downStep">
-        <tile></tile>
+        <game></game>
       </stepper-item>
 
       <stepper-item step="3" @next="upStep" @back="downStep" disallowNext>
@@ -27,7 +27,7 @@
 <script>
   import Organizations from './Organizations'
   import Donation from './Donation'
-  import Tile from './Tiles'
+  import Game from './Game'
   import StepperItem from '@/components/StepperItem'
 
   export default {
@@ -36,7 +36,7 @@
       StepperItem,
       Organizations,
       Donation,
-      Tile
+      Game
     },
     data() {
       return {
