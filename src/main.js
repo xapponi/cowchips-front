@@ -8,6 +8,9 @@ import VueTheMask from 'vue-the-mask'
 import localStorage from '@/helpers/localStorage'
 import axios from 'axios'
 import { authTokenName } from '@/config/auth'
+import ToggleButton from 'vue-js-toggle-button'
+
+
 
 axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL
 axios.defaults.withCredentials = true
@@ -17,6 +20,9 @@ Vue.config.productionTip = false
 Vue.use(Vuetify)
 Vue.use(Vuex)
 Vue.use(VueTheMask)
+Vue.use(ToggleButton)
+
+
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {

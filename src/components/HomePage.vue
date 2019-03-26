@@ -1,6 +1,19 @@
 <template>
   <v-container>
     <v-layout text-xs-center wrap>
+      <v-flex xs12 offset-xs8>
+        <div style="text-align: center;">
+          <v-btn round to="/login">Login</v-btn>
+          <v-btn round  @click="logout" >Logout</v-btn>
+<!--
+          <button round v-on:click="change">{{btntext}}</button>
+-->
+
+          <!--
+                   <toggle-button id = "toggler" large @change="onChangeEventHandler"  width = "90" :labels="{checked: 'Logout', unchecked: 'Login'}" style="margin-left: 0px" />
+          -->
+        </div>
+      </v-flex>
       <v-flex xs12>
         <v-img
             :src="require('../assets/boo_radley.png')"
@@ -41,18 +54,17 @@
         </div>
       </v-flex>
 
-      <v-flex xs12>
+      <v-flex xs12 md-center>
         <div style="text-align: center;">
           <v-btn large dark round to="/donation">Donate</v-btn>
         </div>
       </v-flex>
 
-      <v-flex>
+      <v-flex md-center>
         <div style="text-align: center;">
-          <v-btn round>Play</v-btn>
-          <v-btn round>Your Tiles</v-btn>
-          <v-btn round>Account</v-btn>
-          <v-btn round>Log Out</v-btn>
+          <v-btn round to="/play">Play</v-btn>
+          <v-btn round to="/account/tiles">Your Tiles</v-btn>
+          <v-btn round to="/account">Account</v-btn>
         </div>
       </v-flex>
 
@@ -63,8 +75,15 @@
 </template>
 
 <script>
+  import {authTokenName} from '@/config/auth'
+  import localStorage from '@/helpers/localStorage'
+
+
+
   export default {
-    data: () => ({
+    name: 'HomePage',
+    data: () =>
+            ({
       booRadleyFoundation: [
         {
           text: 'home page',
@@ -77,6 +96,29 @@
         if (this.$store.state.user)
           return ' ' + this.$store.state.user.email
         return ''
+      }
+    },
+    methods: {
+      logout: function () {
+        const jwt= localStorage.getCookie(authTokenName)
+
+        localStorage.setCookie(authTokenName,null)
+
+
+      },
+      change: function () {
+        this.btntext = "cancel"
+        setTimeout(function () {
+          console.log("test")
+          this.btntext = "text changed"
+        }.bind(this), 1000)},
+
+      onChangeEventHandler(){
+        if(toggler.labels == "Login")
+        {
+          alert('logged in')
+        }
+        //alert('hi')
       }
     }
   }
