@@ -34,6 +34,9 @@
     methods: {
       getGameBoard() {
         let gameId = this.$localStorage.get(localStorageNames.gameId)
+        if(!gameId)
+          return
+
         axios.get(path.join('/game', gameId))
           .then(res => {
             // console.log(res.data)
