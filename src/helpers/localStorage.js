@@ -1,3 +1,5 @@
+import { authTokenName } from '@/config/auth'
+
 export default class localStorage {
   static setCookie(name,value,days) {
     let expires = ""
@@ -20,5 +22,8 @@ export default class localStorage {
   }
   static eraseCookie(name) {
     document.cookie = name+'=; Max-Age=-99999999;'
+  }
+  static isUserLoggedIn() {
+    return !!localStorage.getCookie(authTokenName)
   }
 }

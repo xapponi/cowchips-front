@@ -6,11 +6,12 @@
     <v-text-field id="email" placeholder="Email" v-model="email" browser-autocomplete="off"></v-text-field>
     <v-text-field id="password" :type="'password'" placeholder="Password" v-model="password"></v-text-field>
     <v-btn id="submit" @click="submit">Login</v-btn>
+    <span>OR</span>
+    <v-btn to="/register">Register</v-btn>
   </v-container>
 </template>
 
 <script>
-
   import axios from 'axios'
   import localStorage from '@/helpers/localStorage'
   import { authTokenName } from '@/config/auth'
@@ -22,6 +23,11 @@
         error: '',
         email: '',
         password: '',
+      }
+    },
+    beforeCreate() {
+      if(localStorage.isUserLoggedIn()) {
+        this.$router.push('/')
       }
     },
     methods: {

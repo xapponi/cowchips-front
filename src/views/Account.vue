@@ -59,7 +59,6 @@
               @blur="$v.pass2.$touch()"
       ></v-text-field>
 
-      <v-btn v-show="dont" @click="start">start</v-btn>
       <v-btn id="submit" @click="submit">submit</v-btn>
       <v-btn @click="clear">clear</v-btn>
     </form>

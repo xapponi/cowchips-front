@@ -13,12 +13,12 @@
         <organizations @next="upStep"></organizations>
       </stepper-item>
 
-      <stepper-item step="2" @next="upStep" @back="downStep">
-        <game></game>
+      <stepper-item step="2" @back="downStep" disallowNext>
+        <game @next="upStep" :key="step"></game>
       </stepper-item>
 
-      <stepper-item step="3" @next="upStep" @back="downStep" disallowNext>
-        <donation></donation>
+      <stepper-item step="3"  @next="upStep" @back="downStep" disallowNext>
+        <donation :key="step"></donation>
       </stepper-item>
     </v-stepper-items>
   </v-stepper>

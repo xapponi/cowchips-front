@@ -3,15 +3,10 @@
     <v-layout text-xs-center wrap>
       <v-flex xs12 offset-xs8>
         <div style="text-align: center;">
-          <v-btn round to="/login">Login</v-btn>
-          <v-btn round  @click="logout" >Logout</v-btn>
-<!--
-          <button round v-on:click="change">{{btntext}}</button>
--->
-
-          <!--
-                   <toggle-button id = "toggler" large @change="onChangeEventHandler"  width = "90" :labels="{checked: 'Logout', unchecked: 'Login'}" style="margin-left: 0px" />
-          -->
+          <v-btn v-if="!isUserLoggedIn()" round to="/login">Login</v-btn>
+          <v-btn v-if="!isUserLoggedIn()" round to="/register">Register</v-btn>
+          <v-btn v-if="isUserLoggedIn()" round  to="/account">Account</v-btn>
+          <v-btn v-if="isUserLoggedIn()" round  @click="logout" >Logout</v-btn>
         </div>
       </v-flex>
       <v-flex xs12>
@@ -54,17 +49,17 @@
         </div>
       </v-flex>
 
-      <v-flex xs12 md-center>
+      <v-flex md-center xs12 lg12>
         <div style="text-align: center;">
-          <v-btn large dark round to="/donation">Donate</v-btn>
+          <v-btn large dark round to="/play">Play</v-btn>
+          <v-btn large dark round to="/donation?full">Donate</v-btn>
         </div>
       </v-flex>
 
       <v-flex md-center>
-        <div style="text-align: center;">
-          <v-btn round to="/play">Play</v-btn>
-          <v-btn round to="/account/tiles">Your Tiles</v-btn>
-          <v-btn round to="/account">Account</v-btn>
+        <!--<div style="text-align: center;">-->
+        <div class="center2">
+          <v-btn round to="/about">About</v-btn>
         </div>
       </v-flex>
 
@@ -77,8 +72,6 @@
 <script>
   import {authTokenName} from '@/config/auth'
   import localStorage from '@/helpers/localStorage'
-
-
 
   export default {
     name: 'HomePage',
@@ -99,31 +92,20 @@
       }
     },
     methods: {
-      logout: function () {
-        const jwt= localStorage.getCookie(authTokenName)
-
-        localStorage.setCookie(authTokenName,null)
-
-
+      logout() {
+        localStorage.eraseCookie(authTokenName)
       },
-      change: function () {
-        this.btntext = "cancel"
-        setTimeout(function () {
-          console.log("test")
-          this.btntext = "text changed"
-        }.bind(this), 1000)},
-
-      onChangeEventHandler(){
-        if(toggler.labels == "Login")
-        {
-          alert('logged in')
-        }
-        //alert('hi')
+      isUserLoggedIn() {
+        return localStorage.isUserLoggedIn()
       }
     }
   }
 </script>
 
 <style>
+
+  .center2 {
+    text-align: center;
+  }
 
 </style>
