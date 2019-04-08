@@ -9,23 +9,23 @@
           <v-btn v-if="isUserLoggedIn()" round  @click="logout" >Logout</v-btn>
         </div>
       </v-flex>
-      <v-flex xs12>
-        <v-img
-            :src="require('../assets/boo_radley.png')"
-            class="my-3"
-            contain
-            height="100"
-        ></v-img>
-      </v-flex>
+      <!--<v-flex xs12>-->
+        <!--<v-img-->
+            <!--:src="require('../assets/boo_radley.png')"-->
+            <!--class="my-3"-->
+            <!--contain-->
+            <!--height="100"-->
+        <!--&gt;</v-img>-->
+      <!--</v-flex>-->
 
-      <v-flex xs12>
-        <v-img
-            :src="require('../assets/play-cow-patty.jpg')"
-            class="my-3"
-            contain
-            height="400"
-        ></v-img>
-      </v-flex>
+      <!--<v-flex xs12>-->
+        <!--<v-img-->
+            <!--:src="require('../assets/play-cow-patty.jpg')"-->
+            <!--class="my-3"-->
+            <!--contain-->
+            <!--height="400"-->
+        <!--&gt;</v-img>-->
+      <!--</v-flex>-->
 
 
       <v-flex mb-4>

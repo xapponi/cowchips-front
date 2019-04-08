@@ -36,7 +36,7 @@
         let gameId = this.$localStorage.get(localStorageNames.gameId)
         axios.get(path.join('/game', gameId))
           .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             this.board = res.data.board
             this.price = res.data.price
           })

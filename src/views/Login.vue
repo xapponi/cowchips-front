@@ -43,7 +43,8 @@
             this.$router.push('/home')
           })
           .catch(err => {
-            this.error = err.response.data.error
+            this.error = err.response ? err.response.data.error : err
+            console.error(err)
           })
       }
     }
