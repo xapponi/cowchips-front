@@ -94,6 +94,7 @@
     methods: {
       logout() {
         localStorage.eraseCookie(authTokenName)
+        this.$forceUpdate()
       },
       isUserLoggedIn() {
         return localStorage.isUserLoggedIn()

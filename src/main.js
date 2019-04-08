@@ -9,9 +9,10 @@ import localStorage from '@/helpers/localStorage'
 import axios from 'axios'
 import ToggleButton from 'vue-js-toggle-button'
 import VueLocalStorage from 'vue-localstorage'
+import { authTokenName } from '@/config/auth'
 
 axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL
-axios.defaults.withCredentials = true
+axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
