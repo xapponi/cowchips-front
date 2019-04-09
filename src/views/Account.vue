@@ -34,6 +34,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="primary" id="submit" @click.prevent="submit">Submit</v-btn>
+                  <v-btn color="success" id="my-tiles" to="/account/tiles">View My Tiles</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
