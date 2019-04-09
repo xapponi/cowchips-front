@@ -5,8 +5,8 @@
         <td :key="col" v-for="col in 6"><tile :number=board[(row-1)+(col-1)+(row-1)*5] :selected="selected" @selected="handleSelected"></tile></td>
       </tr>
     </table>
-    <div>total: {{this.amount}}</div>
-    <div><v-btn @click="handleSubmit">next</v-btn></div>
+    <div>Price Per Tile: ${{this.price/100}}</div>
+    <div>Total Price: ${{this.amount/100}}</div>
   </div>
 </template>
 
@@ -54,12 +54,10 @@
         else {
           this.selected.push(number)
         }
-      },
-      handleSubmit(){
+
         this.$localStorage.set(localStorageNames.amount, this.amount)
         this.$localStorage.set(localStorageNames.selected, JSON.stringify(this.selected))
-        this.$emit('next')
-      }
+      },
     },
     computed: {
       amount() {

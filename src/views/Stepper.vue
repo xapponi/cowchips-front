@@ -13,7 +13,7 @@
         <organizations @next="upStep"></organizations>
       </stepper-item>
 
-      <stepper-item step="2" @back="downStep" disallowNext>
+      <stepper-item step="2" @back="downStep" @next="upStep">
         <game @next="upStep" :key="step"></game>
       </stepper-item>
 
