@@ -1,5 +1,6 @@
 <template>
-  <v-btn @click="handleClick" :color="btnColor()">{{this.number}}</v-btn>
+  <!--<v-btn @click="handleClick" :color="btnColor()">{{this.number}}</v-btn>-->
+  <td :style="btnColor()" @click="handleClick">{{this.number}}</td>
 </template>
 
 <script>
@@ -14,12 +15,15 @@
         this.$emit('selected', this.number)
       },
       btnColor() {
-        return this.selected.includes(this.number) ? 'info' : ''
+        return this.selected.includes(this.number) ? 'background-color: blue;' : ''
       }
     },
   }
 </script>
 
 <style scoped>
-
+  td {
+    width: 16%;
+    border-style: solid
+  }
 </style>
