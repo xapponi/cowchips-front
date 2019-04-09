@@ -61,17 +61,16 @@
     },
     methods: {
       submit() {
+        const self = this
         axios.post('/login', {
           email: this.email,
           password: this.password
         })
           .then(res => {
-
             const token = res.data.token
-            console.log('token: ' + token)
             localStorage.setCookie(authTokenName, token)
             axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
-            this.$router.push('/home')
+            this.$router.push(self.$route.query.redirect ? self.$route.query.redirect : '/')
           })
           .catch(err => {
             this.error = err.response ? err.response.data.error : err
