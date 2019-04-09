@@ -9,7 +9,7 @@
     </v-stepper-header>
 
     <v-stepper-items>
-      <stepper-item step="1" disallowBack disallowNext>
+      <stepper-item step="1" @back="goHome" disallowNext>
         <organizations @next="upStep"></organizations>
       </stepper-item>
 
@@ -51,6 +51,9 @@
       },
       downStep() {
         this.step--
+      },
+      goHome() {
+        this.$router.push('/')
       }
     }
   }
