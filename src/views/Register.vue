@@ -25,7 +25,7 @@
                   <v-alert v-if="error" :value="true" type="error">{{error}}</v-alert>
                   <v-form style="width: 90%">
                     <v-text-field prepend-icon="person" id="name" placeholder="Name" v-model="user.name" browser-autocomplete="off"></v-text-field>
-                    <v-text-field prepend-icon="person" id="email" placeholder="Email" v-model="user.email" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="email" id="email" placeholder="Email" v-model="user.email" browser-autocomplete="off"></v-text-field>
                     <v-text-field prepend-icon="lock" id="password" :type="'password'" placeholder="Password" v-model="user.password"></v-text-field>
                     <v-text-field prepend-icon="lock" id="password-verify" :type="'password'" placeholder="Verify Password" v-model="passwordVerify"></v-text-field>
                   </v-form>
@@ -65,6 +65,11 @@
 
     methods: {
       submit() {
+        if(this.user.password !== this.passwordVerify) {
+          this.error = 'Password and Verified Password Must Match'
+          return
+        }
+
         axios.post('/register', this.user)
           .then(res => {
             const token = res.data.token
