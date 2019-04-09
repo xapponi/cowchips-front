@@ -65,6 +65,7 @@
   }
 
   .custom-button {
+    border-radius: 20px;
     text-align: center;
     border-style: solid;
     border-width: 1px;
