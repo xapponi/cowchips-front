@@ -1,31 +1,4 @@
 <template>
-  <!--<v-container>-->
-    <!--<h2>Register</h2>-->
-
-    <!--<v-alert v-if="error" :value="true" type="error">{{error}}</v-alert>-->
-
-    <!--<div class="form-group" >-->
-      <!--<label for="Name">Name</label>-->
-      <!--<input required type="text" v-model.trim='name' id='Name' placeholder="Enter Name">-->
-    <!--</div>-->
-
-    <!--<div class="form-group">-->
-      <!--<label for="email">Email</label>-->
-      <!--<input required type="text" v-model.trim='email' id='email' placeholder="Enter Email">-->
-    <!--</div>-->
-
-    <!--<div class="form-group">-->
-      <!--<label for="password">Password</label>-->
-      <!--<input required type="password" v-model='password' placeholder="Password" id='password'>-->
-    <!--</div>-->
-
-    <!--<div class="form-group">-->
-      <!--<label for="phone">Phone</label>-->
-      <!--<input type="tel" v-model="phone" id='phone' placeholder="Phone" />-->
-    <!--</div>-->
-
-    <!--<v-btn  id="Register" @click="register">Register</v-btn>-->
-  <!--</v-container>-->
 
   <div id="app">
     <v-app id="inspire">
@@ -78,12 +51,6 @@
   import localStorage from '@/helpers/localStorage'
   import { authTokenName } from '@/config/auth'
 
-  import Vue from 'vue'
-
-
-  import VueTheMask from 'vue-the-mask'
-  Vue.use(VueTheMask)
-
   export default {
     name: "Register",
     data() {
@@ -102,16 +69,13 @@
       submit() {
         axios.post('/register', this.user)
           .then(res => {
-            console.log(res)
-            // const token = res.data.token
-            // localStorage.setCookie(authTokenName, token)
-            // axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
-            // this.$router.push('/home')
+            const token = res.data.token
+            localStorage.setCookie(authTokenName, token)
+            axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
+            this.$router.push('/home')
           })
           .catch(err=>{
-            console.log(err)
-            console.log(err.response)
-            this.error = err.response.data.error
+            this.error = err.response ? err.response.data.error : err
           })
       }
     }
