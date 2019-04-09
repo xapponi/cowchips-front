@@ -21,16 +21,6 @@
               @input="$v.name.$touch()"
               @blur="$v.name.$touch()"
       ></v-text-field>
-      <!---->
-      <!--<v-text-field-->
-      <!--v-model="email"-->
-      <!--:error-messages="emailErrors"-->
-      <!--label="E-mail"-->
-      <!--id="email"-->
-      <!--required-->
-      <!--@input="$v.email.$touch()"-->
-      <!--@blur="$v.email.$touch()"-->
-      <!--&gt;</v-text-field>-->
       <v-text-field
               v-model="phone"
               :error-messages="phoneErrors"
@@ -91,7 +81,6 @@
 
     data: () => ({
       name: '',
-      // email: '',
       phone: '',
       pass: '',
       pass2: '',
@@ -106,13 +95,6 @@
         !this.$v.name.required && errors.push('Name is required.')
         return errors
       },
-      // emailErrors () {
-      //     const errors = []
-      //     if (!this.$v.email.$dirty) return errors
-      //     !this.$v.email.email && errors.push('Must be valid e-mail')
-      //     !this.$v.email.required && errors.push('E-mail is required')
-      //     return errors
-      // },
       phoneErrors () {
         const errors = []
         if (!this.$v.phone.$dirty) return errors
@@ -141,38 +123,34 @@
     methods: {
       start: function () {
         axios.get('/account')
+          .then(res => {
+            console.log(res)
+            this.name=res.data.name
+            this.phone = res.data.phone.replace('-','')
+            this.phone = this.phone.replace('(','')
+            this.phone = this.phone.replace(')','')
+            this.phone = this.phone.replace(' ','')
+            this.id= res.data.id
+          })
+          .catch( error => {
 
-                .then(res => {
-                  console.log(res)
-                  //this.email=res.data.email
-                  this.name=res.data.name
-                  this.phone = res.data.phone.replace('-','')
-                  this.phone = this.phone.replace('(','')
-                  this.phone = this.phone.replace(')','')
-                  this.phone = this.phone.replace(' ','')
-                  this.id= res.data.id
-                })
-                .catch( error => {
-
-                })
+          })
       },
       submit () {
         axios.put('/account', {
-          //id: this.id,
-          //email: this.email,
           phone: this.phone,
           password:this.pass,
           name: this.name
         })
-                .then(res => {
-                  console.log(res)
-                  const token = res.data.token
-                  localStorage.setCookie(authTokenName, token)
-                  this.$router.push('/home')
-                })
-                .catch(err => {
-                  this.error = err.response.data.error
-                })
+          .then(res => {
+            console.log(res)
+            const token = res.data.token
+            localStorage.setCookie(authTokenName, token)
+            this.$router.push('/home')
+          })
+          .catch(err => {
+            this.error = err.response.data.error
+          })
       },
       clear () {
         this.$v.$reset()
@@ -183,10 +161,8 @@
         this.pass2 = ''
       }
     },
-    created: function(){
-
+    created() {
       this.start()
-
     }
   }
 </script>

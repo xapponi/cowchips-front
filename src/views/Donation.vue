@@ -37,6 +37,7 @@
       }
     },
     mounted() {
+      console.log(this.full)
       card = elements.create('card', {
         iconStyle: 'solid',
         style: {

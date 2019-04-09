@@ -1,14 +1,16 @@
 <template>
   <v-container>
     <v-layout text-xs-center wrap>
-      <v-flex xs12 offset-xs8>
+      <v-flex>
         <div style="text-align: center;">
           <v-btn v-if="!isUserLoggedIn()" round to="/login">Login</v-btn>
           <v-btn v-if="!isUserLoggedIn()" round to="/register">Register</v-btn>
+          <span v-if="isUserLoggedIn()">Logged in as: {{userEmail}}</span>
           <v-btn v-if="isUserLoggedIn()" round  to="/account">Account</v-btn>
           <v-btn v-if="isUserLoggedIn()" round  @click="logout" >Logout</v-btn>
         </div>
       </v-flex>
+
       <!--<v-flex xs12>-->
         <!--<v-img-->
             <!--:src="require('../assets/boo_radley.png')"-->
@@ -30,8 +32,11 @@
 
       <v-flex mb-4>
         <div style="text-align: center;">
-          <h1 class="display-4 font-weight-thin mb-3" >
-            Welcome{{email}} to the CowChips4Charity event page!
+          <h1 v-if="isUserLoggedIn()" class="display-4 font-weight-thin mb-3" >
+            Welcome {{userEmail}} to CowChips4Charity!
+          </h1>
+          <h1 v-else class="display-4 font-weight-thin mb-3" >
+            Welcome to CowChips4Charity!
           </h1>
 
           <p class="subheading font-weight-regular">
@@ -52,7 +57,7 @@
       <v-flex md-center xs12 lg12>
         <div style="text-align: center;">
           <v-btn large dark round to="/play">Play</v-btn>
-          <v-btn large dark round to="/donation?full">Donate</v-btn>
+          <v-btn large dark round to="/donation?full=true">Donate</v-btn>
         </div>
       </v-flex>
 
@@ -72,17 +77,30 @@
 <script>
   import {authTokenName} from '@/config/auth'
   import localStorage from '@/helpers/localStorage'
+  import axios from 'axios'
 
   export default {
     name: 'HomePage',
-    data: () =>
-            ({
+    created() {
+      if(!this.isUserLoggedIn())
+        return
+
+      axios.get('/account')
+        .then(res => {
+          this.userEmail = res.data.email
+        })
+        .catch(err => {
+
+        })
+    },
+    data: () => ({
       booRadleyFoundation: [
         {
           text: 'home page',
           href: 'http://www.booradleyfoundation.org/'
         }
-      ]
+      ],
+      userEmail: ''
     }),
     computed: {
       email() {
@@ -94,6 +112,7 @@
     methods: {
       logout() {
         localStorage.eraseCookie(authTokenName)
+        axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
         this.$forceUpdate()
       },
       isUserLoggedIn() {
