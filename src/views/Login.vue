@@ -30,8 +30,6 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="primary" id="submit" @click.prevent="submit">Login</v-btn>
-                  <span>OR</span>
-                  <v-btn to="/register">Register</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
