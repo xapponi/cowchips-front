@@ -7,9 +7,6 @@
 
     </v-flex>
 
-
-
-
     <form>
       <v-text-field
               v-model="name"

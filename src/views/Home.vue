@@ -34,6 +34,7 @@
 <script>
   import {authTokenName} from '@/config/auth'
   import localStorage from '@/helpers/localStorage'
+  import axios from 'axios'
 
   export default {
     methods: {
