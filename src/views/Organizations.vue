@@ -36,7 +36,7 @@
     },
     methods: {
       getOrganizations() {
-        axios.get('/game/active')
+        axios.get('/game/active?populate=true')
           .then(res => {
             const games = res.data
             games.forEach(game => {

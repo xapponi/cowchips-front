@@ -1,12 +1,12 @@
 <template>
   <div>
-    <table>
+    <table class="whole">
       <tr :key="row" v-for="row in 6">
         <td :key="col" v-for="col in 6"><tile :number=board[(row-1)+(col-1)+(row-1)*5] :selected="selected" @selected="handleSelected"></tile></td>
       </tr>
     </table>
-    <div>total: {{this.amount}}</div>
-    <div><v-btn @click="handleSubmit">next</v-btn></div>
+    <div>Price Per Tile: ${{this.price/100}}</div>
+    <div>Total Price: ${{this.amount/100}}</div>
   </div>
 </template>
 
@@ -34,9 +34,12 @@
     methods: {
       getGameBoard() {
         let gameId = this.$localStorage.get(localStorageNames.gameId)
+        if(!gameId)
+          return
+
         axios.get(path.join('/game', gameId))
           .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             this.board = res.data.board
             this.price = res.data.price
           })
@@ -51,12 +54,10 @@
         else {
           this.selected.push(number)
         }
-      },
-      handleSubmit(){
+
         this.$localStorage.set(localStorageNames.amount, this.amount)
         this.$localStorage.set(localStorageNames.selected, JSON.stringify(this.selected))
-        this.$emit('next')
-      }
+      },
     },
     computed: {
       amount() {
@@ -76,5 +77,9 @@
   }
   table {
     margin-top: 20px;
+  }
+  .whole {
+    height: 95%;
+    width: 100%;
   }
 </style>

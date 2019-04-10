@@ -1,92 +1,87 @@
+<template>
 
+  <div id="app">
+    <v-app id="inspire">
+      <v-content>
+        <v-container fluid fill-height>
+          <v-layout align-center justify-center>
+            <v-flex xs12 sm8 md4>
+              <v-card class="elevation-12 shadow">
+                <v-toolbar dark color="primary">
+                  <v-toolbar-title>Register</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-tooltip bottom>
+                    <v-btn
+                        icon
+                        large
+                        to="/"
+                        slot="activator"
+                    >
+                      <v-icon large>arrow_back</v-icon>
+                    </v-btn>
+                  </v-tooltip>
+                </v-toolbar>
+                <v-card-text>
+                  <v-alert v-if="error" :value="true" type="error">{{error}}</v-alert>
+                  <v-form style="width: 90%">
+                    <v-text-field prepend-icon="person" id="name" placeholder="Name" v-model="user.name" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="email" id="email" placeholder="Email" v-model="user.email" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="lock" id="password" :type="'password'" placeholder="Password" v-model="user.password"></v-text-field>
+                    <v-text-field prepend-icon="lock" id="password-verify" :type="'password'" placeholder="Verify Password" v-model="passwordVerify"></v-text-field>
+                  </v-form>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" id="submit" @click.prevent="submit">Register</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>
 
-  <template>
-    <v-container>
-
-      <h2>Register</h2>
-
-      <v-alert v-if="error" :value="true" type="error">{{error}}</v-alert>
-      <div class="form-group" >
-        <label for="Name">Name</label>
-        <input required type="text" v-model.trim='name' id='Name' placeholder="Enter Name">
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input required type="text" v-model.trim='email' id='email' placeholder="Enter Email">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input required type="password" v-model='password' placeholder="Password" id='password'>
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="tel" v-model="phone" id='phone' placeholder="Phone" />
-
-      </div>
-      <v-btn  id="Register" @click="register">Register</v-btn>
-    </v-container>
-  </template>
-
-
+</template>
 
 <script>
   import axios from 'axios'
   import localStorage from '@/helpers/localStorage'
   import { authTokenName } from '@/config/auth'
 
-  import Vue from 'vue'
-
-
-  import VueTheMask from 'vue-the-mask'
-  Vue.use(VueTheMask)
-
-
   export default {
     name: "Register",
     data() {
       return {
-        success:'',
         error: '',
-        email: '',
-        password: '',
-        name: '',
-        phone:'',
-        dob: new Date(4000000000),
-        location:  {
-        "address": "123 Main St",
-          "state": "Iowa",
-          "zip": "50011",
-          "city": "Ames"
-      },
+        user: {
+          name: '',
+          email: '',
+          password: ''
+        },
+        passwordVerify: ''
       }
     },
 
-    methods:
-      {
-        register()
-        {
-            axios.post('/Register',{
-              email: this.email,
-              password: this.password,
-              name: this.name,
-              phone: this.phone,
-              dob: this.dob,
-              location: this.location,
-            })
-              .then(res=>{
-                this.success=true
-                const token = res.data.token
-                localStorage.setCookie(authTokenName, token)
-                this.$router.push('/home')
-              })
-              .catch(err=>{
-                this.error = err.response.data.error
-              })
-
+    methods: {
+      submit() {
+        if(this.user.password !== this.passwordVerify) {
+          this.error = 'Password and Verified Password Must Match'
+          return
         }
+
+        axios.post('/register', this.user)
+          .then(res => {
+            const token = res.data.token
+            localStorage.setCookie(authTokenName, token)
+            axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
+            this.$router.push('/home')
+          })
+          .catch(err=>{
+            this.error = err.response ? err.response.data.error : err
+          })
+      }
     }
-
-
   }
 </script>
 

@@ -1,192 +1,94 @@
 <template>
-  <v-container>
-
-    <v-flex xs12>
-
-      <v-btn large dark round to="/home">Home</v-btn>
-
-    </v-flex>
-
-
-
-
-    <form>
-      <v-text-field
-              v-model="name"
-              :error-messages="nameErrors"
-              :counter="20"
-              label="Name"
-              id = "name"
-              required
-              @input="$v.name.$touch()"
-              @blur="$v.name.$touch()"
-      ></v-text-field>
-      <!---->
-      <!--<v-text-field-->
-      <!--v-model="email"-->
-      <!--:error-messages="emailErrors"-->
-      <!--label="E-mail"-->
-      <!--id="email"-->
-      <!--required-->
-      <!--@input="$v.email.$touch()"-->
-      <!--@blur="$v.email.$touch()"-->
-      <!--&gt;</v-text-field>-->
-      <v-text-field
-              v-model="phone"
-              :error-messages="phoneErrors"
-              label="Phone number"
-              id = "phone number"
-              required
-              @input="$v.phone.$touch()"
-              @blur="$v.phone.$touch()"
-      ></v-text-field>
-      <v-text-field
-              v-model="pass"
-              :error-messages="passErrors"
-              label="Password"
-              id = "password"
-              required
-              @input="$v.pass.$touch()"
-              @blur="$v.pass.$touch()"
-      ></v-text-field>
-      <v-text-field
-              v-model="pass2"
-              :error-messages="pass2Errors"
-              label="Re-enter password"
-              id = "pass2"
-              required
-              @input="$v.pass2.$touch()"
-              @blur="$v.pass2.$touch()"
-      ></v-text-field>
-
-      <v-btn id="submit" @click="submit">submit</v-btn>
-      <v-btn @click="clear">clear</v-btn>
-    </form>
-
-
-  </v-container>
+  <div id="app">
+    <v-app id="inspire">
+      <v-content>
+        <v-container fluid fill-height>
+          <v-layout align-center justify-center>
+            <v-flex xs12 sm8 md4>
+              <v-card class="elevation-12 shadow">
+                <v-toolbar dark color="primary">
+                  <v-toolbar-title>Account</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-tooltip bottom>
+                    <v-btn
+                        icon
+                        large
+                        to="/"
+                        slot="activator"
+                    >
+                      <v-icon large>arrow_back</v-icon>
+                    </v-btn>
+                  </v-tooltip>
+                </v-toolbar>
+                <v-card-text>
+                  <v-alert v-if="error" :value="true" type="error">{{error}}</v-alert>
+                  <v-form style="width: 90%">
+                    <v-text-field prepend-icon="person" id="name" placeholder="Name" v-model="user.name" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="email" id="email" placeholder="Email" v-model="user.email" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="home" id="address" placeholder="Address" v-model="user.location.address" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="location_city" id="city" placeholder="Address" v-model="user.location.city" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="beenhere" id="state" placeholder="Address" v-model="user.location.state" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="beenhere" id="zip" placeholder="Zip" v-model="user.location.zip" browser-autocomplete="off"></v-text-field>
+                  </v-form>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" id="submit" @click.prevent="submit">Submit</v-btn>
+                  <v-btn color="success" id="my-tiles" to="/account/tiles">View My Tiles</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>
 </template>
 
 <script>
-  import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email, minLength, sameAs} from 'vuelidate/lib/validators'
-  import { authTokenName} from '@/config/auth'
   import axios from 'axios'
-  import localStorage from '@/helpers/localStorage'
 
   export default {
     name: 'Account',
-    mixins: [validationMixin],
 
-    validations: {
-      name: { required, maxLength: maxLength(20) },
-      // email: { required, email },
-      phone: {required, maxLength: maxLength(10)},
-      pass: {required, minLength: minLength(6)},
-      pass2: {required, minLength: minLength(6), sameAsPassword: sameAs('pass')}
-
-
-
+    created() {
+      axios.get('/account')
+        .then(res => {
+          console.log(res.data)
+          this.user = res.data
+        })
+        .catch( error => {
+          console.log(error)
+          console.log(error.response)
+        })
     },
 
     data: () => ({
-      name: '',
-      // email: '',
-      phone: '',
-      pass: '',
-      pass2: '',
-      id:''
+      error: '',
+      user: {
+        location: {}
+      }
     }),
 
-    computed: {
-      nameErrors () {
-        const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-        !this.$v.name.required && errors.push('Name is required.')
-        return errors
-      },
-      // emailErrors () {
-      //     const errors = []
-      //     if (!this.$v.email.$dirty) return errors
-      //     !this.$v.email.email && errors.push('Must be valid e-mail')
-      //     !this.$v.email.required && errors.push('E-mail is required')
-      //     return errors
-      // },
-      phoneErrors () {
-        const errors = []
-        if (!this.$v.phone.$dirty) return errors
-        !this.$v.phone.maxLength && errors.push('Enter a valid phone number')
-        !this.$v.phone.required && errors.push('Phone is required.')
-        return errors
-      },
-      passErrors () {
-        const errors = []
-        if (!this.$v.pass.$dirty) return errors
-        !this.$v.pass.minLength && errors.push('Password must be at least 6 characters long')
-        !this.$v.pass.required && errors.push('Password is required.')
-        return errors
-      },
-      pass2Errors () {
-        const errors = []
-        if (!this.$v.pass2.$dirty) return errors
-        !this.$v.pass2.minLength && errors.push('Password must be at least 6 characters long')
-        !this.$v.pass2.required && errors.push('Password is required.')
-        !this.$v.pass2.sameAsPassword && errors.push('The passwords entered do not match')
-        return errors
-      },
-    },
-
-
     methods: {
-      start: function () {
-        axios.get('/account')
-
-                .then(res => {
-                  console.log(res)
-                  //this.email=res.data.email
-                  this.name=res.data.name
-                  this.phone = res.data.phone.replace('-','')
-                  this.phone = this.phone.replace('(','')
-                  this.phone = this.phone.replace(')','')
-                  this.phone = this.phone.replace(' ','')
-                  this.id= res.data.id
-                })
-                .catch( error => {
-
-                })
-      },
       submit () {
-        axios.put('/account', {
-          //id: this.id,
-          //email: this.email,
-          phone: this.phone,
-          password:this.pass,
-          name: this.name
-        })
-                .then(res => {
-                  console.log(res)
-                  const token = res.data.token
-                  localStorage.setCookie(authTokenName, token)
-                  this.$router.push('/home')
-                })
-                .catch(err => {
-                  this.error = err.response.data.error
-                })
+        const record = {
+          name: this.user.name,
+          address: this.user.address,
+          city: this.user.city,
+          state: this.user.state,
+          zip: this.user.zip,
+        }
+        axios.put('/account', record)
+          .then(() => {
+            this.$router.push('/home')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log(err.response)
+            this.error = err.response.data.error
+          })
       },
-      clear () {
-        this.$v.$reset()
-        this.name = ''
-        //this.email = ''
-        this.phone = ''
-        this.pass = ''
-        this.pass2 = ''
-      }
-    },
-    created: function(){
-
-      this.start()
-
     }
   }
 </script>

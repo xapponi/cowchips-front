@@ -9,11 +9,11 @@
     </v-stepper-header>
 
     <v-stepper-items>
-      <stepper-item step="1" disallowBack disallowNext>
+      <stepper-item step="1" @back="goHome" disallowNext>
         <organizations @next="upStep"></organizations>
       </stepper-item>
 
-      <stepper-item step="2" @back="downStep" disallowNext>
+      <stepper-item step="2" @back="downStep" @next="upStep">
         <game @next="upStep" :key="step"></game>
       </stepper-item>
 
@@ -51,6 +51,9 @@
       },
       downStep() {
         this.step--
+      },
+      goHome() {
+        this.$router.push('/')
       }
     }
   }
