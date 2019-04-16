@@ -14,7 +14,7 @@
         this.$emit('selected', this.number)
       },
       btnColor() {
-        return this.selected.includes(this.number) ? 'background-color: #0074D9; color: white;' : ''
+        return this.selected.includes(this.number) ? 'background-color: #5C2C17; color: white;' : ''
       }
     },
   }

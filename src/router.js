@@ -68,10 +68,7 @@ export default new Router({
     {
       path: '/thankyou',
       name: 'Thank You!',
-      component: ThankYou,
-      meta: {
-        requiresAuth: true
-      }
+      component: ThankYou
     },
     {
       path: '*',

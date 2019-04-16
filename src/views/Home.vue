@@ -34,13 +34,13 @@
 <script>
   import {authTokenName} from '@/config/auth'
   import localStorage from '@/helpers/localStorage'
-  import axios from 'axios'
 
   export default {
     methods: {
       logout() {
+        console.log('logout!')
+        localStorage.setCookie(authTokenName, '')
         localStorage.eraseCookie(authTokenName)
-        axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
         this.$forceUpdate()
       },
       isUserLoggedIn() {

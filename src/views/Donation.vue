@@ -1,6 +1,6 @@
 <template>
   <div class="test">
-    <div class="center">
+    <div :class="{ center: !full, 'not-center': full  }">
       <v-btn to="/" v-if="full">Back</v-btn>
       <fieldset class="donation-fieldset" v-if="full">
         <div class="row">
@@ -79,7 +79,7 @@
           }
 
           const toSend = {
-            amount: this.full ? this.amount*100 : self.$localStorage.get(localStorageNames.amount),
+            amount: self.full ? this.amount*100 : self.$localStorage.get(localStorageNames.amount),
             source: result.token.id,
             currency: 'USD',
             organizationID: self.$localStorage.get(localStorageNames.orgId),
@@ -161,6 +161,10 @@
     top: 50%;
     height: 100px;
     margin-top: -50px;
+  }
+
+  .not-center {
+
   }
 
   .donation-label {
