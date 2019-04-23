@@ -77,8 +77,8 @@
             axios.defaults.headers['Authorization'] = localStorage.getCookie(authTokenName)
             this.$router.push('/home')
           })
-          .catch(err=>{
-            this.error = err.response ? err.response.data.error : err
+          .catch(err => {
+            this.error = err.response ? err.response.data.error[0].message : err.message
           })
       }
     }

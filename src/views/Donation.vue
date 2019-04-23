@@ -37,7 +37,6 @@
       }
     },
     mounted() {
-      console.log(this.full)
       card = elements.create('card', {
         iconStyle: 'solid',
         style: {
@@ -79,7 +78,7 @@
           }
 
           const toSend = {
-            amount: self.full ? this.amount*100 : self.$localStorage.get(localStorageNames.amount),
+            amount: self.full ? self.amount*100 : self.$localStorage.get(localStorageNames.amount),
             source: result.token.id,
             currency: 'USD',
             organizationID: self.$localStorage.get(localStorageNames.orgId),

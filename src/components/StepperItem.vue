@@ -84,7 +84,6 @@
         return this.windowWidth-this.itemPaddingWidth*2-10 + 'px'
       },
       height() {
-        console.log(this.navHeight)
         return this.windowHeight-this.headerHeight-this.navHeight-120 + 'px'
       }
     }

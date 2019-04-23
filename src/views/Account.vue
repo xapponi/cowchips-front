@@ -26,8 +26,8 @@
                     <v-text-field prepend-icon="person" id="name" placeholder="Name" v-model="user.name" browser-autocomplete="off"></v-text-field>
                     <v-text-field prepend-icon="email" id="email" placeholder="Email" v-model="user.email" browser-autocomplete="off"></v-text-field>
                     <v-text-field prepend-icon="home" id="address" placeholder="Address" v-model="user.location.address" browser-autocomplete="off"></v-text-field>
-                    <v-text-field prepend-icon="location_city" id="city" placeholder="Address" v-model="user.location.city" browser-autocomplete="off"></v-text-field>
-                    <v-text-field prepend-icon="beenhere" id="state" placeholder="Address" v-model="user.location.state" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="location_city" id="city" placeholder="City" v-model="user.location.city" browser-autocomplete="off"></v-text-field>
+                    <v-text-field prepend-icon="beenhere" id="state" placeholder="State" v-model="user.location.state" browser-autocomplete="off"></v-text-field>
                     <v-text-field prepend-icon="beenhere" id="zip" placeholder="Zip" v-model="user.location.zip" browser-autocomplete="off"></v-text-field>
                   </v-form>
                 </v-card-text>
@@ -54,8 +54,10 @@
     created() {
       axios.get('/account')
         .then(res => {
-          console.log(res.data)
           this.user = res.data
+          if (this.user.location == null) {
+            this.user.location = {}
+          }
         })
         .catch( error => {
           console.log(error)
@@ -74,13 +76,16 @@
       submit () {
         const record = {
           name: this.user.name,
-          address: this.user.address,
-          city: this.user.city,
-          state: this.user.state,
-          zip: this.user.zip,
+          location: {
+            address: this.user.location.address,
+            city: this.user.location.city,
+            state: this.user.location.state,
+            zip: this.user.location.zip
+          }
         }
+
         axios.put('/account', record)
-          .then(() => {
+          .then(res => {
             this.$router.push('/home')
           })
           .catch(err => {

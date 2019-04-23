@@ -4,14 +4,9 @@
     <v-list>
       <template v-for="org in this.organizations">
         <v-list-tile
-            avatar
             @click="handleTeamSelection(org.id)"
             :key="org.id"
         >
-          <v-list-tile-avatar>
-            <img :src="org.photo" onerror="this.style.display='none'" @error="registerImgError(org.id)">
-            <span v-if="hasImgError(org.id)">{{org.abbreviation}}</span>
-          </v-list-tile-avatar>
           <v-list-tile-content>{{org.name}}</v-list-tile-content>
         </v-list-tile>
       </template>
@@ -30,8 +25,7 @@
     },
     data() {
       return {
-        organizations: [],
-        imgErrors: []
+        organizations: []
       }
     },
     methods: {
@@ -54,12 +48,6 @@
         this.$localStorage.set(localStorageNames.gameId, orgRecord.gameId)
         this.$localStorage.set(localStorageNames.orgId, id)
         this.$emit('next')
-      },
-      hasImgError(id) {
-        return this.imgErrors.includes(id)
-      },
-      registerImgError(id) {
-        this.imgErrors.push(id)
       }
     },
   }
